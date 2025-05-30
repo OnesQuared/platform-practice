@@ -1,0 +1,91 @@
+[gd_scene load_steps=8 format=3 uid="uid://ci1cf6yjtqbhk"]
+
+[ext_resource type="PackedScene" uid="uid://dk3j3n4sma166" path="res://scene/Character.tscn" id="1_r3fp2"]
+[ext_resource type="PackedScene" uid="uid://b0ems4mhnjnf7" path="res://scene/Platform.tscn" id="2_aole0"]
+
+[sub_resource type="GDScript" id="GDScript_r3fp2"]
+script/source = "extends Node
+
+
+func _on_area_2d_body_entered(body: Node2D) -> void:
+	get_tree().change_scene_to_file()
+"
+
+[sub_resource type="QuadMesh" id="QuadMesh_3a1jv"]
+size = Vector2(100, 15)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_3a1jv"]
+size = Vector2(555, 84)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_r3fp2"]
+size = Vector2(5016, 54)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_aole0"]
+size = Vector2(96, 64)
+
+[node name="stage" type="Node2D"]
+script = SubResource("GDScript_r3fp2")
+
+[node name="CharacterBody2D" parent="." instance=ExtResource("1_r3fp2")]
+position = Vector2(128, 320)
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+
+[node name="MeshInstance2D" type="MeshInstance2D" parent="StaticBody2D"]
+position = Vector2(305, 565)
+scale = Vector2(5.555, 5.555)
+mesh = SubResource("QuadMesh_3a1jv")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
+position = Vector2(305, 565)
+shape = SubResource("RectangleShape2D_3a1jv")
+
+[node name="Platform" parent="." instance=ExtResource("2_aole0")]
+position = Vector2(1184, 528)
+
+[node name="Platform2" parent="." instance=ExtResource("2_aole0")]
+position = Vector2(816, 528)
+
+[node name="Platform3" parent="." instance=ExtResource("2_aole0")]
+position = Vector2(1504, 528)
+
+[node name="Platform4" parent="." instance=ExtResource("2_aole0")]
+position = Vector2(1856, 440)
+
+[node name="RespawnPoint" type="Node2D" parent="."]
+unique_name_in_owner = true
+position = Vector2(128, 448)
+
+[node name="death" type="Area2D" parent="."]
+position = Vector2(296, 632)
+
+[node name="deathzone" type="CollisionShape2D" parent="death"]
+position = Vector2(1580, 0)
+shape = SubResource("RectangleShape2D_r3fp2")
+
+[node name="Platform5" parent="." instance=ExtResource("2_aole0")]
+position = Vector2(2200, 440)
+
+[node name="Platform6" parent="." instance=ExtResource("2_aole0")]
+position = Vector2(2440, 368)
+
+[node name="Platform7" parent="." instance=ExtResource("2_aole0")]
+position = Vector2(2744, 368)
+
+[node name="Platform8" parent="." instance=ExtResource("2_aole0")]
+position = Vector2(3168, 440)
+
+[node name="Platform9" parent="." instance=ExtResource("2_aole0")]
+position = Vector2(3496, 440)
+
+[node name="Platform10" parent="." instance=ExtResource("2_aole0")]
+position = Vector2(3888, 320)
+
+[node name="Area2D" type="Area2D" parent="."]
+position = Vector2(3888, 280)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("RectangleShape2D_aole0")
+
+[connection signal="body_shape_entered" from="death" to="CharacterBody2D" method="_on_death_body_shape_entered"]
+[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
