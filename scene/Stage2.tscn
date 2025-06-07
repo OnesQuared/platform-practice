@@ -38,3 +38,9 @@ position = Vector2(1696, 184)
 
 [node name="Platform7" parent="." instance=ExtResource("2_c1g1t")]
 position = Vector2(1976, 56)
+
+[node name="RespawnPoint" type="Node2D" parent="."]
+unique_name_in_owner = true
+position = Vector2(352, 344)
+
+[connection signal="body_entered" from="death" to="CharacterBody2D" method="_on_death_body_entered"]
